@@ -23,19 +23,19 @@
                         <Image url="@icons/kitty.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="catCounterText" alignment="CENTER" text="Label" />
+                  <Label fx:id="catCounterText" alignment="CENTER" text="0" />
                   <ImageView fitHeight="72.0" fitWidth="72.0" onMouseClicked="#onMushroomClick" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/gomba.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="mushroomCounterText" alignment="CENTER" text="Label" />
+                  <Label fx:id="mushroomCounterText" alignment="CENTER" text="0" />
                   <ImageView fitHeight="72.0" fitWidth="72.0" onMouseClicked="#onBirdClick" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/madar.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="birdCounterText" alignment="CENTER" text="Label" />
+                  <Label fx:id="birdCounterText" alignment="CENTER" text="0" />
                   <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <ImageView fitHeight="32.0" fitWidth="32.0" onMouseClicked="#onLeftTrashClick" pickOnBounds="true" preserveRatio="true">
@@ -76,7 +76,7 @@
       </HBox>
       <HBox>
          <children>
-            <Label fx:id="totalCounterText" text="Label" />
+            <Label fx:id="totalCounterText" text="0 / 0 elem van a listákban" />
             <Pane HBox.hgrow="ALWAYS" />
             <ImageView fitHeight="16.0" fitWidth="16.0" onMouseClicked="#onSaveClick" pickOnBounds="true" preserveRatio="true">
                <image>
