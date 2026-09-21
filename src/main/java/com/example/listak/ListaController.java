@@ -3,7 +3,7 @@ package com.example.listak;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class ListaController {
     @FXML
     private Label welcomeText;
 
