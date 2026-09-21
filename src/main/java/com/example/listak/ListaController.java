@@ -5,6 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class ListaController {
@@ -29,6 +33,20 @@ public class ListaController {
     private int catCounter = 0;
     private int mushroomCounter = 0;
     private int birdCounter = 0;
+
+
+    @FXML
+    protected void initialize() {
+        if (!Files.exists(Path.of("listak.txt"))) {
+            System.out.println("Nincs");
+            return;
+        }
+        try {
+            parse_file(Files.readString(Path.of("listak.txt")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     @FXML
@@ -97,7 +115,13 @@ public class ListaController {
 
     @FXML
     protected void onSaveClick() {
-
+        try {
+            FileWriter writer = new FileWriter("listak.txt");
+            writer.write(construct_save_string());
+            writer.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -110,5 +134,38 @@ public class ListaController {
         birdCounterText.setText(String.valueOf(birdCounter));
 
         totalCounterText.setText("%s / %s elem van a listákban".formatted(leftListContent.size(), rightListContent.size()));
+    }
+
+
+    protected String construct_save_string() {
+        String str = "";
+
+        for (String a : leftListContent) {
+            str += a + "\n";
+        }
+
+        str = str + "\n";
+
+        for (String b : rightListContent) {
+            str += b + "\n";
+        }
+        return str;
+    }
+
+
+    protected void parse_file(String raw_file) {
+        String[] rows = raw_file.split("\n");
+        boolean is_second_list = false;
+
+        for (String row : rows) {
+            if (row.isEmpty()) {
+                is_second_list = true;
+                continue;
+            }
+            row = row.strip();
+            if (is_second_list) rightListContent.add(row);
+            else leftListContent.add(row);
+        }
+        update_view();
     }
 }
