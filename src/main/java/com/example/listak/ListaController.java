@@ -37,12 +37,12 @@ public class ListaController {
 
     @FXML
     protected void initialize() {
-        if (!Files.exists(Path.of("listak.txt"))) {
+        if (!Files.exists(Path.of(ListaTest.isRunningTest ? "test.txt" : "listak.txt"))) {
             System.out.println("Nincs");
             return;
         }
         try {
-            parse_file(Files.readString(Path.of("listak.txt")));
+            parse_file(Files.readString(Path.of(ListaTest.isRunningTest ? "test.txt" : "listak.txt")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,7 +70,7 @@ public class ListaController {
 
     @FXML
     protected void onAddClick() {
-        int selected = leftList.getSelectionModel().getSelectedIndex();
+        int selected = ListaTest.isRunningTest ? 0 : leftList.getSelectionModel().getSelectedIndex();
         if (selected < 0) return;
 
         String content = leftListContent.get(selected);
@@ -91,7 +91,7 @@ public class ListaController {
     }
     @FXML
     protected void onDelClick() {
-        int selected = rightList.getSelectionModel().getSelectedIndex();
+        int selected = ListaTest.isRunningTest ? 0 : rightList.getSelectionModel().getSelectedIndex();
         if (selected < 0) return;
 
         rightListContent.remove(selected);
@@ -116,7 +116,7 @@ public class ListaController {
     @FXML
     protected void onSaveClick() {
         try {
-            FileWriter writer = new FileWriter("listak.txt");
+            FileWriter writer = new FileWriter(ListaTest.isRunningTest ? "test.txt" : "listak.txt");
             writer.write(construct_save_string());
             writer.close();
         } catch (Exception e) {
@@ -126,14 +126,14 @@ public class ListaController {
 
 
     protected void update_view() {
-        leftList.setItems(FXCollections.observableArrayList(leftListContent));
-        rightList.setItems(FXCollections.observableArrayList(rightListContent));
+        if (!ListaTest.isRunningTest) leftList.setItems(FXCollections.observableArrayList(leftListContent));
+        if (!ListaTest.isRunningTest) rightList.setItems(FXCollections.observableArrayList(rightListContent));
 
-        catCounterText.setText(String.valueOf(catCounter));
-        mushroomCounterText.setText(String.valueOf(mushroomCounter));
-        birdCounterText.setText(String.valueOf(birdCounter));
+        if (!ListaTest.isRunningTest) catCounterText.setText(String.valueOf(catCounter));
+        if (!ListaTest.isRunningTest) mushroomCounterText.setText(String.valueOf(mushroomCounter));
+        if (!ListaTest.isRunningTest) birdCounterText.setText(String.valueOf(birdCounter));
 
-        totalCounterText.setText("%s / %s elem van a listákban".formatted(leftListContent.size(), rightListContent.size()));
+        if (!ListaTest.isRunningTest) totalCounterText.setText("%s / %s elem van a listákban".formatted(leftListContent.size(), rightListContent.size()));
     }
 
 
